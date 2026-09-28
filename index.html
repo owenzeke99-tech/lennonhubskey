@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lennon Hub Key</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --yellow:#ffd21c;
+    --gold:#ffae00;
+    --dark:#050505;
+    --panel:rgba(15,15,12,.78);
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    min-height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Orbitron",sans-serif;
+    color:white;
+    background:
+        radial-gradient(circle at 50% 35%,#4a3900 0%,#171300 25%,#070707 58%,#020202 100%);
+}
+
+/* ================= BACKGROUND ================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.3;
+    animation:orbMove 9s ease-in-out infinite alternate;
+}
+
+.orb.one{
+    width:280px;
+    height:280px;
+    background:#ffb700;
+    top:-100px;
+    left:-80px;
+}
+
+.orb.two{
+    width:350px;
+    height:350px;
+    background:#ff8c00;
+    right:-130px;
+    bottom:-130px;
+    animation-delay:2s;
+}
+
+@keyframes orbMove{
+    0%{transform:translate(0,0) scale(1)}
+    100%{transform:translate(60px,-35px) scale(1.2)}
+}
+
+/* grid */
+.grid{
+    position:absolute;
+    inset:-100%;
+    background-image:
+        linear-gradient(rgba(255,210,28,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,210,28,.045) 1px,transparent 1px);
+    background-size:55px 55px;
+    transform:perspective(500px) rotateX(65deg);
+    animation:gridMove 12s linear infinite;
+}
+
+@keyframes gridMove{
+    from{transform:perspective(500px) rotateX(65deg) translateY(0)}
+    to{transform:perspective(500px) rotateX(65deg) translateY(55px)}
+}
+
+/* particles */
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#ffe45a;
+    box-shadow:0 0 10px #ffc400,0 0 22px #ff9d00;
+    animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+    0%{
+        transform:translateY(110vh) scale(.2);
+        opacity:0;
+    }
+    15%{opacity:1}
+    85%{opacity:.8}
+    100%{
+        transform:translateY(-20vh) scale(1.5);
+        opacity:0;
+    }
+}
+
+.p1{left:5%;animation-duration:8s}
+.p2{left:14%;animation-duration:11s;animation-delay:2s}
+.p3{left:24%;animation-duration:7s;animation-delay:1s}
+.p4{left:37%;animation-duration:12s;animation-delay:4s}
+.p5{left:51%;animation-duration:9s;animation-delay:2s}
+.p6{left:66%;animation-duration:10s;animation-delay:5s}
+.p7{left:78%;animation-duration:7s;animation-delay:1s}
+.p8{left:91%;animation-duration:13s;animation-delay:3s}
+.p9{left:58%;animation-duration:8s;animation-delay:6s}
+.p10{left:31%;animation-duration:10s;animation-delay:7s}
+
+/* ================= CARD ================= */
+
+.card{
+    position:relative;
+    z-index:10;
+    width:min(92%,500px);
+    padding:40px 32px 30px;
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30,30,20,.82),
+            rgba(5,5,5,.88)
+        );
+
+    border:1px solid rgba(255,210,28,.55);
+    border-radius:30px;
+
+    box-shadow:
+        0 0 0 1px rgba(255,174,0,.08),
+        0 0 35px rgba(255,190,0,.16),
+        0 25px 80px rgba(0,0,0,.75),
+        inset 0 0 45px rgba(255,190,0,.035);
+
+    backdrop-filter:blur(22px);
+
+    animation:
+        cardAppear 1s cubic-bezier(.2,.8,.2,1),
+        cardFloat 5s ease-in-out 1s infinite;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    border-radius:30px;
+    padding:1px;
+    background:linear-gradient(
+        120deg,
+        transparent 15%,
+        rgba(255,225,65,.9),
+        transparent 45%,
+        transparent 70%,
+        rgba(255,160,0,.7)
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    animation:borderRotate 5s linear infinite;
+    pointer-events:none;
+}
+
+@keyframes cardAppear{
+    from{
+        opacity:0;
+        transform:translateY(45px) scale(.9);
+        filter:blur(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0);
+    }
+}
+
+@keyframes cardFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-7px)}
+}
+
+@keyframes borderRotate{
+    to{filter:hue-rotate(25deg)}
+}
+
+/* ================= LOGO ================= */
+
+.logo-wrap{
+    position:relative;
+    width:145px;
+    height:145px;
+    margin:0 auto 25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.logo-ring{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    border:1px solid rgba(255,210,28,.5);
+    box-shadow:
+        0 0 20px rgba(255,190,0,.25),
+        inset 0 0 20px rgba(255,190,0,.15);
+    animation:ringSpin 8s linear infinite;
+}
+
+.logo-ring::before,
+.logo-ring::after{
+    content:"";
+    position:absolute;
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#ffe34a;
+    box-shadow:0 0 15px #ffc400;
+}
+
+.logo-ring::before{
+    top:-4px;
+    left:50%;
+}
+
+.logo-ring::after{
+    bottom:-4px;
+    right:50%;
+}
+
+@keyframes ringSpin{
+    to{transform:rotate(360deg)}
+}
+
+/* Quả tranh / egg fruit */
+.fruit{
+    position:relative;
+    width:105px;
+    height:118px;
+    border-radius:48% 52% 47% 53% / 55% 48% 52% 45%;
+    background:
+        radial-gradient(circle at 34% 25%,#fff7a1 0 4%,transparent 5%),
+        radial-gradient(circle at 67% 34%,#ffe65a 0 3%,transparent 4%),
+        radial-gradient(circle at 42% 65%,#ffc400 0 3%,transparent 4%),
+        linear-gradient(145deg,#fff06a 0%,#ffd21c 38%,#ffab00 72%,#e87500 100%);
+    box-shadow:
+        inset -13px -16px 25px rgba(130,55,0,.32),
+        inset 12px 10px 20px rgba(255,255,210,.28),
+        0 0 18px rgba(255,208,25,.8),
+        0 0 55px rgba(255,166,0,.48);
+    transform:rotate(-5deg);
+    animation:fruitFloat 3s ease-in-out infinite;
+}
+
+.fruit::before{
+    content:"";
+    position:absolute;
+    width:43px;
+    height:19px;
+    top:-11px;
+    left:51px;
+    border-radius:100% 0 100% 0;
+    background:linear-gradient(135deg,#d8ff45,#5f9d00);
+    transform:rotate(-18deg);
+    box-shadow:0 4px 12px rgba(90,140,0,.45);
+}
+
+.fruit::after{
+    content:"";
+    position:absolute;
+    width:10px;
+    height:19px;
+    top:-13px;
+    left:49px;
+    border-radius:8px;
+    background:#765000;
+    transform:rotate(-4deg);
+}
+
+@keyframes fruitFloat{
+    0%,100%{
+        transform:rotate(-5deg) translateY(0) scale(1);
+    }
+    50%{
+        transform:rotate(4deg) translateY(-6px) scale(1.04);
+    }
+}
+
+/* fruit shine */
+.shine{
+    position:absolute;
+    width:20px;
+    height:40px;
+    border-radius:50%;
+    background:rgba(255,255,255,.5);
+    filter:blur(5px);
+    top:22px;
+    left:24px;
+    transform:rotate(30deg);
+    animation:shineMove 2.5s ease-in-out infinite;
+}
+
+@keyframes shineMove{
+    0%,100%{opacity:.25;transform:translateX(0) rotate(30deg)}
+    50%{opacity:.7;transform:translateX(7px) rotate(30deg)}
+}
+
+/* ================= TITLE ================= */
+
+h1{
+    position:relative;
+    font-size:clamp(26px,7vw,40px);
+    line-height:1.15;
+    font-weight:900;
+    letter-spacing:2px;
+
+    background:linear-gradient(
+        90deg,
+        #fff5a0,
+        #ffd21c,
+        #ff9d00,
+        #fff5a0
+    );
+    background-size:250% auto;
+    -webkit-background-clip:text;
+    color:transparent;
+
+    text-shadow:0 0 30px rgba(255,190,0,.25);
+
+    animation:titleShine 4s linear infinite;
+}
+
+@keyframes titleShine{
+    to{background-position:250% center}
+}
+
+.subtitle{
+    margin-top:10px;
+    margin-bottom:27px;
+    color:#777;
+    font-size:10px;
+    letter-spacing:4px;
+}
+
+/* ================= KEY ================= */
+
+.key-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:9px;
+    color:#aaa;
+    font-size:9px;
+    letter-spacing:2px;
+    text-align:left;
+}
+
+.key-label span{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#ffd21c;
+    box-shadow:0 0 10px #ffd21c;
+    animation:blink 1.3s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:.25;transform:scale(.6)}
+}
+
+.key-box{
+    position:relative;
+    overflow:hidden;
+    padding:18px 16px;
+
+    border:1px solid rgba(255,210,28,.38);
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,210,28,.07),
+            rgba(255,255,255,.025)
+        );
+
+    color:#ffe45c;
+    font-family:monospace;
+    font-size:12px;
+    line-height:1.6;
+    word-break:break-all;
+
+    box-shadow:
+        inset 0 0 20px rgba(255,190,0,.04),
+        0 0 18px rgba(255,190,0,.04);
+}
+
+.key-box::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:50%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.12),
+        transparent
+    );
+    transform:skewX(-20deg);
+    animation:keySweep 3.5s infinite;
+}
+
+@keyframes keySweep{
+    0%{left:-100%}
+    45%,100%{left:160%}
+}
+
+/* ================= BUTTON ================= */
+
+button{
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    margin-top:16px;
+    padding:17px;
+
+    border:1px solid #ffe45c;
+    border-radius:16px;
+
+    cursor:pointer;
+    font-family:"Orbitron",sans-serif;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:2px;
+
+    color:#100e05;
+
+    background:linear-gradient(
+        135deg,
+        #fff276,
+        #ffd21c 45%,
+        #ff9e00
+    );
+
+    box-shadow:
+        0 0 20px rgba(255,190,0,.32),
+        inset 0 1px rgba(255,255,255,.55);
+
+    transition:.3s cubic-bezier(.2,.8,.2,1);
+}
+
+button::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:80%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.7),
+        transparent
+    );
+    transform:skewX(-25deg);
+    animation:buttonShine 3s infinite;
+}
+
+@keyframes buttonShine{
+    0%,35%{left:-120%}
+    70%,100%{left:150%}
+}
+
+button:hover{
+    transform:translateY(-4px) scale(1.015);
+    box-shadow:
+        0 0 30px rgba(255,205,30,.65),
+        0 12px 30px rgba(0,0,0,.45);
+}
+
+button:active{
+    transform:scale(.97);
+}
+
+/* ================= STATUS ================= */
+
+.status{
+    min-height:19px;
+    margin-top:13px;
+    color:#777;
+    font-size:9px;
+    letter-spacing:1.5px;
+}
+
+.status.success{
+    color:#ffe14a;
+    text-shadow:0 0 12px #ffc400;
+    animation:successPop .4s ease;
+}
+
+@keyframes successPop{
+    from{transform:scale(.8);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+
+.footer{
+    margin-top:22px;
+    color:#4d4d4d;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:520px){
+    .card{
+        padding:32px 20px 25px;
+        border-radius:25px;
+    }
+
+    .logo-wrap{
+        width:125px;
+        height:125px;
+    }
+
+    .fruit{
+        width:91px;
+        height:103px;
+    }
+
+    h1{
+        font-size:27px;
+    }
+
+    .key-box{
+        font-size:10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="grid"></div>
+
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
+    <div class="particle p6"></div>
+    <div class="particle p7"></div>
+    <div class="particle p8"></div>
+    <div class="particle p9"></div>
+    <div class="particle p10"></div>
+
+</div>
+
+<div class="card">
+
+    <!-- QUẢ TRANH / EGG FRUIT -->
+    <div class="logo-wrap">
+        <div class="logo-ring"></div>
+
+        <div class="fruit">
+            <div class="shine"></div>
+        </div>
+    </div>
+
+    <h1>Lennon Hub Key</h1>
+
+    <div class="subtitle">
+        PREMIUM KEY SYSTEM
+    </div>
+
+    <div class="key-label">
+        <span></span>
+        YOUR ACCESS KEY
+    </div>
+
+    <div class="key-box" id="key">
+        LennonHubKeyVsjwkien - NnxksowowheoVsjsheieiendjoe
+    </div>
+
+    <button onclick="copyKey()">
+        COPY KEY
+    </button>
+
+    <div class="status" id="status"></div>
+
+    <div class="footer">
+        LENNON HUB • SECURE ACCESS
+    </div>
+
+</div>
+
+<script>
+function copyKey(){
+
+    const key = document
+        .getElementById("key")
+        .innerText
+        .trim();
+
+    const status = document.getElementById("status");
+
+    navigator.clipboard.writeText(key)
+    .then(()=>{
+        showSuccess();
+    })
+    .catch(()=>{
+        const textarea = document.createElement("textarea");
+        textarea.value = key;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+
+        document.execCommand("copy");
+        textarea.remove();
+
+        showSuccess();
+    });
+
+    function showSuccess(){
+        status.textContent = "✓ KEY COPIED SUCCESSFULLY";
+        status.classList.add("success");
+
+        setTimeout(()=>{
+            status.textContent = "";
+            status.classList.remove("success");
+        },2500);
+    }
+}
+</script>
+
+</body>
+</html>
